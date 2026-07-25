@@ -1,5 +1,7 @@
 // app.js — shell controller: สร้าง tab bar จาก registry, สลับเกม, โหลด module ตอนกดแท็บ
-import { GAMES } from './registry.js';
+// VER = query string ของ app.js (เช่น "?v=4") ต่อท้ายทุก import เพื่อ bust cache เวลาอัปเดต
+const VER = new URL(import.meta.url).search;
+const { GAMES } = await import('./registry.js' + VER);
 
 const stage = document.getElementById('stage');
 const tabbar = document.getElementById('tabbar');
@@ -52,7 +54,7 @@ async function selectGame(id) {
 
   // โหลด + เปิดเกมใหม่
   try {
-    const mod = await import(game.module);
+    const mod = await import(game.module + VER);
     if (typeof mod.mount !== 'function') {
       throw new Error(`เกม "${game.id}" ไม่มีฟังก์ชัน mount()`);
     }
