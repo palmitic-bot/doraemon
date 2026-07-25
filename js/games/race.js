@@ -11,8 +11,19 @@ const ANIMALS = [
   { id:'camel',    emoji:'🐫', name:'อูฐ' },
   { id:'dog',      emoji:'🐕', name:'สุนัข' },
   { id:'pig',      emoji:'🐖', name:'หมู' },
+  { id:'cat',      emoji:'🐈', name:'แมว' },
+  { id:'tiger',    emoji:'🐅', name:'เสือโคร่ง' },
+  { id:'lion',     emoji:'🦁', name:'สิงโต' },
+  { id:'monkey',   emoji:'🐒', name:'ลิง' },
+  { id:'deer',     emoji:'🦌', name:'กวาง' },
+  { id:'fox',      emoji:'🦊', name:'จิ้งจอก' },
+  { id:'wolf',     emoji:'🐺', name:'หมาป่า' },
+  { id:'bear',     emoji:'🐻', name:'หมี' },
+  { id:'kangaroo', emoji:'🦘', name:'จิงโจ้' },
+  { id:'snail',    emoji:'🐌', name:'หอยทาก' },
 ];
 const MEDAL = ['🥇','🥈','🥉'];
+const MAX_RACERS = 10;
 
 let root, el, selected = new Set(['horse','rabbit','turtle','cheetah']), raf = null, running = false;
 
@@ -27,18 +38,25 @@ function renderSetup(){
     <div class="g-wrap">
       <div class="g-head">
         <h1 class="g-title">สัตว์วิ่งแข่ง 🏁</h1>
-        <p class="g-sub">เลือกสัตว์ที่จะลงแข่ง (อย่างน้อย 2 ตัว) แล้วกดเริ่ม</p>
+        <p class="g-sub">เลือกสัตว์ที่จะลงแข่ง (2–${MAX_RACERS} ตัว) แล้วกดเริ่ม</p>
       </div>
       <div class="race-picker">${chips}</div>
       <button class="g-btn" id="startBtn">เริ่มแข่ง! 🏁</button>
-      <p class="g-note" id="pickNote">เลือกแล้ว ${selected.size} ตัว</p>
+      <p class="g-note" id="pickNote">เลือกแล้ว ${selected.size}/${MAX_RACERS} ตัว</p>
     </div>`;
   el = { note: root.querySelector('#pickNote') };
   root.querySelectorAll('.race-pick').forEach(b => b.addEventListener('click', () => {
     const id = b.dataset.id;
-    if(selected.has(id)) selected.delete(id); else selected.add(id);
+    if(selected.has(id)){
+      selected.delete(id);
+    } else if(selected.size >= MAX_RACERS){
+      el.note.textContent = `⚠️ เล่นได้ไม่เกิน ${MAX_RACERS} ตัว`;
+      return;
+    } else {
+      selected.add(id);
+    }
     b.classList.toggle('on', selected.has(id));
-    el.note.textContent = `เลือกแล้ว ${selected.size} ตัว`;
+    el.note.textContent = `เลือกแล้ว ${selected.size}/${MAX_RACERS} ตัว`;
   }));
   root.querySelector('#startBtn').addEventListener('click', () => {
     if(selected.size < 2){ el.note.textContent = '⚠️ ต้องเลือกอย่างน้อย 2 ตัว'; return; }

@@ -50,8 +50,10 @@ function startRound(){
 }
 
 function renderPlay(){
-  const upper = Array.from({ length: Math.min(teeth, 12) }, () => `<span class="ut"></span>`).join('');
-  const lower = Array.from({ length: teeth }, (_, i) => `<button class="c2tooth" data-i="${i}">🦷</button>`).join('');
+  const topN = Math.ceil(teeth / 2);   // จำนวนคี่ -> ฟันบนมากกว่าล่าง 1 ซี่
+  const mk = i => `<button class="c2tooth" data-i="${i}"></button>`;
+  const topRow = Array.from({ length: topN }, (_, i) => mk(i)).join('');
+  const botRow = Array.from({ length: teeth - topN }, (_, i) => mk(topN + i)).join('');
   root.innerHTML = `
     <div class="g-wrap">
       <div class="g-head">
@@ -60,12 +62,17 @@ function renderPlay(){
       </div>
       <span class="g-tag" id="status">🦷 ${teeth} · 💣 ${bombs}</span>
       <div class="croc2" id="croc">
-        <div class="croc2-eyes"><div class="croc2-eye"></div><div class="croc2-eye"></div></div>
+        <div class="croc2-eyes">
+          <div class="croc2-eye"><span class="brow"></span></div>
+          <div class="croc2-eye"><span class="brow"></span></div>
+        </div>
         <div class="croc2-upper">
           <span class="croc2-nostril l"></span><span class="croc2-nostril r"></span>
-          <div class="croc2-upper-teeth">${upper}</div>
         </div>
-        <div class="croc2-mouth"><div class="croc2-teeth" id="teeth">${lower}</div></div>
+        <div class="croc2-mouth">
+          <div class="croc2-teeth top">${topRow}</div>
+          <div class="croc2-teeth bottom">${botRow}</div>
+        </div>
         <div class="croc2-lower"></div>
       </div>
       <div class="g-row">
@@ -76,9 +83,8 @@ function renderPlay(){
   el = {
     croc: root.querySelector('#croc'),
     status: root.querySelector('#status'),
-    teeth: root.querySelector('#teeth'),
   };
-  el.teeth.querySelectorAll('.c2tooth').forEach(b =>
+  el.croc.querySelectorAll('.c2tooth').forEach(b =>
     b.addEventListener('click', () => press(Number(b.dataset.i), b)));
   root.querySelector('#againBtn').addEventListener('click', startRound);
   root.querySelector('#cfgBtn').addEventListener('click', renderConfig);
@@ -94,13 +100,13 @@ function press(i, btn){
     el.status.textContent = '💥 งับ! คนนี้แพ้ — ดื่มเลย!';
     el.status.style.color = 'var(--pink)';
     el.status.style.borderColor = 'rgba(255,93,143,0.4)';
-    el.teeth.querySelectorAll('.c2tooth').forEach((t, idx) => {
+    el.croc.querySelectorAll('.c2tooth').forEach(t => {
       t.disabled = true;
-      if(bombSet.has(idx)){ t.classList.add('boom'); t.textContent = '💥'; }
+      if(bombSet.has(Number(t.dataset.i))){ t.classList.add('boom'); t.textContent = '💥'; }
     });
   } else {
     btn.classList.add('safe'); btn.textContent = '✓'; btn.disabled = true;
-    const safeLeft = teeth - bombs - el.teeth.querySelectorAll('.c2tooth.safe').length;
+    const safeLeft = teeth - bombs - el.croc.querySelectorAll('.c2tooth.safe').length;
     el.status.textContent = `รอด! เหลือซี่ปลอดภัย ${safeLeft} ซี่ · ระวัง 💣 ${bombs}`;
   }
 }
