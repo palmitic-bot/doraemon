@@ -1,66 +1,109 @@
-// crocodile.js — ฟันจรเข้ (กดฟันทีละซี่ ใครกดโดนซี่ที่งับ = แพ้)
-const TEETH = 10;
-let root, el, biteIndex = -1, over = false;
+// crocodile.js — ฟันจรเข้ (หมอฟันจระเข้)
+// เลือกจำนวนฟัน + จำนวนซี่ระเบิด — กดโดนซี่ระเบิด = ปากงับลงมา แพ้!
+let root, el, teeth = 10, bombs = 1, bombSet = new Set(), over = false;
 
-function newRound(){
-  over = false;
-  biteIndex = Math.floor(Math.random() * TEETH);
-  el.face.textContent = '🐊';
-  el.face.classList.remove('chomp');
-  el.status.textContent = 'ผลัดกันกดฟันทีละซี่ ระวังโดนงับ!';
-  el.status.style.color = 'var(--cream-dim)';
-  el.grid.querySelectorAll('.tooth').forEach((t, i) => {
-    t.className = 'tooth';
-    t.disabled = false;
-    t.textContent = '🦷';
-  });
-}
-
-function press(i, btn){
-  if(over || btn.classList.contains('pressed')) return;
-  if(i === biteIndex){
-    over = true;
-    btn.classList.add('bite');
-    btn.textContent = '😱';
-    el.face.textContent = '🐊💥';
-    el.face.classList.add('chomp');
-    el.status.textContent = 'งับ! 😱 คนนี้แพ้ — ดื่มเลย!';
-    el.status.style.color = 'var(--pink)';
-    el.grid.querySelectorAll('.tooth').forEach(t => { t.disabled = true; });
-  } else {
-    btn.classList.add('pressed');
-    btn.textContent = '✓';
-    btn.disabled = true;
-    const left = [...el.grid.querySelectorAll('.tooth')].filter(t => !t.classList.contains('pressed')).length - 1;
-    el.status.textContent = `รอด! เหลือฟันปลอดภัยอีก ${left} ซี่ ส่งต่อคนถัดไป`;
-    el.status.style.color = 'var(--cream-dim)';
-  }
-}
-
-export function mount(container){
-  root = container;
-  const teeth = Array.from({ length: TEETH }, (_, i) =>
-    `<button class="tooth" data-i="${i}">🦷</button>`).join('');
+function renderConfig(){
   root.innerHTML = `
     <div class="g-wrap">
       <div class="g-head">
         <h1 class="g-title">ฟันจรเข้ 🐊</h1>
-        <p class="g-sub">ผลัดกันกดฟัน 1 ซี่ต่อคน ใครกดโดนซี่ที่จระเข้งับ = แพ้!</p>
+        <p class="g-sub">ตั้งค่าก่อนเริ่ม แล้วผลัดกันกดฟัน</p>
       </div>
-      <div class="croc-face" id="face">🐊</div>
-      <div class="g-tag" id="status">ผลัดกันกดฟันทีละซี่ ระวังโดนงับ!</div>
-      <div class="teeth-grid" id="grid">${teeth}</div>
-      <button class="g-btn" id="resetBtn">เริ่มรอบใหม่ 🔄</button>
+      <div class="cfg-row">
+        <span class="cfg-label">🦷 จำนวนฟัน</span>
+        <div class="stepper">
+          <button data-t="-1" aria-label="ลด">−</button>
+          <span class="val" id="teethVal">${teeth}</span>
+          <button data-t="1" aria-label="เพิ่ม">+</button>
+        </div>
+      </div>
+      <div class="cfg-row">
+        <span class="cfg-label">💣 ซี่ระเบิด</span>
+        <div class="stepper">
+          <button data-b="-1" aria-label="ลด">−</button>
+          <span class="val" id="bombVal">${bombs}</span>
+          <button data-b="1" aria-label="เพิ่ม">+</button>
+        </div>
+      </div>
+      <button class="g-btn" id="startBtn">เริ่มเกม 🐊</button>
+      <p class="g-note">ฟัน 6–14 ซี่ · ระเบิด 1 ถึง (ฟัน − 1)</p>
     </div>`;
-  el = {
-    face: root.querySelector('#face'),
-    status: root.querySelector('#status'),
-    grid: root.querySelector('#grid'),
-  };
-  el.grid.querySelectorAll('.tooth').forEach(btn =>
-    btn.addEventListener('click', () => press(Number(btn.dataset.i), btn)));
-  root.querySelector('#resetBtn').addEventListener('click', newRound);
-  newRound();
+  const teethVal = root.querySelector('#teethVal');
+  const bombVal = root.querySelector('#bombVal');
+  root.querySelectorAll('[data-t]').forEach(b => b.addEventListener('click', () => {
+    teeth = Math.min(14, Math.max(6, teeth + Number(b.dataset.t)));
+    if(bombs > teeth - 1) bombs = teeth - 1;
+    teethVal.textContent = teeth; bombVal.textContent = bombs;
+  }));
+  root.querySelectorAll('[data-b]').forEach(b => b.addEventListener('click', () => {
+    bombs = Math.min(teeth - 1, Math.max(1, bombs + Number(b.dataset.b)));
+    bombVal.textContent = bombs;
+  }));
+  root.querySelector('#startBtn').addEventListener('click', startRound);
 }
 
-export function unmount(){ root = null; el = null; }
+function startRound(){
+  over = false;
+  bombSet = new Set();
+  while(bombSet.size < bombs){ bombSet.add(Math.floor(Math.random() * teeth)); }
+  renderPlay();
+}
+
+function renderPlay(){
+  const upper = Array.from({ length: Math.min(teeth, 12) }, () => `<span class="ut"></span>`).join('');
+  const lower = Array.from({ length: teeth }, (_, i) => `<button class="c2tooth" data-i="${i}">🦷</button>`).join('');
+  root.innerHTML = `
+    <div class="g-wrap">
+      <div class="g-head">
+        <h1 class="g-title">ฟันจรเข้ 🐊</h1>
+        <p class="g-sub">ผลัดกันกดฟัน 1 ซี่ต่อคน โดนซี่ระเบิด = ปากงับ แพ้!</p>
+      </div>
+      <span class="g-tag" id="status">🦷 ${teeth} · 💣 ${bombs}</span>
+      <div class="croc2" id="croc">
+        <div class="croc2-eyes"><div class="croc2-eye"></div><div class="croc2-eye"></div></div>
+        <div class="croc2-upper">
+          <span class="croc2-nostril l"></span><span class="croc2-nostril r"></span>
+          <div class="croc2-upper-teeth">${upper}</div>
+        </div>
+        <div class="croc2-mouth"><div class="croc2-teeth" id="teeth">${lower}</div></div>
+        <div class="croc2-lower"></div>
+      </div>
+      <div class="g-row">
+        <button class="g-btn" id="againBtn">รอบใหม่ 🔄</button>
+        <button class="g-btn ghost sm" id="cfgBtn">ตั้งค่า ⚙️</button>
+      </div>
+    </div>`;
+  el = {
+    croc: root.querySelector('#croc'),
+    status: root.querySelector('#status'),
+    teeth: root.querySelector('#teeth'),
+  };
+  el.teeth.querySelectorAll('.c2tooth').forEach(b =>
+    b.addEventListener('click', () => press(Number(b.dataset.i), b)));
+  root.querySelector('#againBtn').addEventListener('click', startRound);
+  root.querySelector('#cfgBtn').addEventListener('click', renderConfig);
+}
+
+function press(i, btn){
+  if(over || btn.classList.contains('safe') || btn.classList.contains('boom')) return;
+  if(bombSet.has(i)){
+    over = true;
+    const crocEl = el.croc;
+    crocEl.classList.add('chomp', 'shake');
+    setTimeout(() => { if(crocEl) crocEl.classList.remove('shake'); }, 460);
+    el.status.textContent = '💥 งับ! คนนี้แพ้ — ดื่มเลย!';
+    el.status.style.color = 'var(--pink)';
+    el.status.style.borderColor = 'rgba(255,93,143,0.4)';
+    el.teeth.querySelectorAll('.c2tooth').forEach((t, idx) => {
+      t.disabled = true;
+      if(bombSet.has(idx)){ t.classList.add('boom'); t.textContent = '💥'; }
+    });
+  } else {
+    btn.classList.add('safe'); btn.textContent = '✓'; btn.disabled = true;
+    const safeLeft = teeth - bombs - el.teeth.querySelectorAll('.c2tooth.safe').length;
+    el.status.textContent = `รอด! เหลือซี่ปลอดภัย ${safeLeft} ซี่ · ระวัง 💣 ${bombs}`;
+  }
+}
+
+export function mount(container){ root = container; renderConfig(); }
+export function unmount(){ root = null; el = null; over = true; }

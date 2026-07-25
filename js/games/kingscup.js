@@ -266,6 +266,9 @@ export function mount(root){
   };
   el.drawBtn.addEventListener('click', drawCard);
   el.resetBtn.addEventListener('click', newGame);
+  // แตะที่การ์ด/พื้นที่รอบๆ ก็จั่วได้เลย (ไม่ต้องกดปุ่มอย่างเดียว)
+  const arena = root.querySelector('.card-arena');
+  if(arena){ arena.style.cursor = 'pointer'; arena.addEventListener('click', drawCard); }
   newGame();
 }
 
