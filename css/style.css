@@ -537,6 +537,74 @@ textarea.g-input{ resize:vertical; min-height:96px; line-height:1.7; }
 .bar-marker.good{ background:#7fe07a; box-shadow:0 0 12px rgba(120,240,110,.9); }
 .bar-marker.bad{ background:var(--pink); box-shadow:0 0 12px rgba(255,93,143,.9); }
 
+/* ===== เป่ายิงฉุบ (rps) ===== */
+.rps-face{ display:flex; align-items:center; justify-content:center; gap:14px; font-size:52px; }
+.rps-face .rps-vs{ font-family:'Kanit',sans-serif; font-weight:800; font-size:18px; color:var(--cream-dim); }
+
+/* ===== ตัวเลือกแบบปุ่ม (trivia / math) ===== */
+.choice-list{ display:flex; flex-direction:column; gap:8px; width:100%; max-width:400px; }
+.choice-list.two{ display:grid; grid-template-columns:1fr 1fr; }
+.choice-btn{ width:100%; font-family:'Kanit',sans-serif; font-weight:600; font-size:16px; color:var(--cream);
+  background:var(--ink-2); border:1px solid var(--line); border-radius:12px; padding:14px 16px; cursor:pointer;
+  transition:background .15s ease, border-color .15s ease; }
+.choice-btn:active{ transform:scale(.98); }
+.choice-btn.correct{ background:linear-gradient(180deg,#3fae5c,#2c7d40); border-color:transparent; color:#fff; }
+.choice-btn.wrong{ background:linear-gradient(180deg,#e0435c,#a01b2c); border-color:transparent; color:#fff; }
+
+/* ===== จับผิดสี (stroop) ===== */
+.stroop-word{ font-family:'Kanit',sans-serif; font-weight:800; font-size:clamp(36px,12vw,56px); }
+.stroop-word.miss{ animation:bal-shake .2s ease; }
+.stroop-pads{ display:grid; grid-template-columns:1fr 1fr; gap:10px; width:100%; max-width:320px; }
+.swatch{ border:none; border-radius:14px; padding:18px 0; cursor:pointer; color:#12100f;
+  font-family:'Kanit',sans-serif; font-weight:800; font-size:16px; box-shadow:0 4px 10px rgba(0,0,0,.3); }
+.swatch:active{ transform:scale(.96); }
+
+/* ===== ทำตามลำดับ (simon) ===== */
+.simon-grid{ display:grid; grid-template-columns:1fr 1fr; gap:12px; width:min(78vw,280px); }
+.simon-pad{ aspect-ratio:1; border:none; border-radius:16px; cursor:pointer;
+  background:var(--pc); opacity:.42; transition:opacity .1s ease, transform .1s ease; box-shadow:0 4px 10px rgba(0,0,0,.3); }
+.simon-pad.lit{ opacity:1; transform:scale(1.04); box-shadow:0 0 22px var(--pc); }
+.simon-pad:active{ opacity:.8; }
+
+/* ===== หัวก้อย (coin) ===== */
+.coin-stage{ height:170px; display:flex; align-items:center; justify-content:center; perspective:900px; }
+.coin{ width:130px; height:130px; position:relative; transform-style:preserve-3d; }
+.coin-face{ position:absolute; inset:0; border-radius:50%; backface-visibility:hidden;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;
+  font-family:'Kanit',sans-serif; font-weight:800; font-size:20px; color:#5a4410;
+  background:radial-gradient(circle at 38% 32%, #ffe9a8, var(--gold) 60%, #b8892b);
+  box-shadow:inset 0 0 0 6px rgba(0,0,0,.12), 0 8px 18px rgba(0,0,0,.4); }
+.coin-h{ transform:rotateY(0deg); }
+.coin-t{ transform:rotateY(180deg); }
+
+/* ===== ทายอิโมจิ (emoji quiz) ===== */
+.emoji-clue{ font-size:clamp(48px,15vw,72px); line-height:1.1; letter-spacing:4px; }
+
+/* ===== เลือกสิ (would you rather) ===== */
+.wyr-opt{ width:100%; max-width:420px; min-height:74px; cursor:pointer;
+  font-family:'Kanit',sans-serif; font-weight:700; font-size:clamp(16px,4.6vw,20px); color:var(--cream);
+  background:linear-gradient(160deg,#2b3566,#1d2344); border:1px solid var(--line); border-radius:16px; padding:16px; }
+.wyr-opt.b{ background:linear-gradient(160deg,#5e2545,#3a1730); }
+.wyr-opt.picked{ border-color:var(--gold); box-shadow:0 0 0 2px rgba(234,185,73,.5); }
+.wyr-or{ font-family:'Kanit',sans-serif; font-weight:800; color:var(--gold); font-size:15px; }
+
+/* ===== ดวงวันนี้ (fortune) ===== */
+.fortune-emoji{ font-size:60px; line-height:1; }
+.g-card.spin .fortune-emoji{ animation:bomb-pulse .3s linear infinite; }
+
+/* ===== ตบมือดวล (tap duel) ===== */
+.duel-wrap{ width:100%; max-width:420px; display:flex; flex-direction:column; gap:6px; }
+.duel-half{ border:none; cursor:pointer; border-radius:16px; padding:18px 12px; color:#fff;
+  display:flex; flex-direction:column; align-items:center; gap:8px; }
+.duel-half.top{ background:linear-gradient(160deg,#3b5bdb,#26306e); transform:rotate(180deg); }
+.duel-half.bot{ background:linear-gradient(160deg,#e0435c,#8a1f2c); }
+.duel-half.win{ box-shadow:0 0 0 3px var(--gold), 0 0 22px rgba(234,185,73,.6); }
+.duel-tap{ font-family:'Kanit',sans-serif; font-weight:800; font-size:26px; }
+.duel-label{ font-family:'Kanit',sans-serif; font-weight:700; font-size:14px; opacity:.9; }
+.duel-bar-wrap{ width:90%; height:12px; background:rgba(0,0,0,.3); border-radius:100px; overflow:hidden; }
+.duel-bar{ height:100%; width:0; background:#fff; border-radius:100px; transition:width .05s linear; }
+.duel-mid{ text-align:center; font-family:'Kanit',sans-serif; font-weight:800; font-size:16px; color:var(--gold); padding:4px 0; }
+
 /* ===== picker reveal ===== */
 .reveal-name{ font-family:'Kanit',sans-serif; font-weight:800; font-size:clamp(30px,9vw,44px); line-height:1.2; min-height:1.2em; }
 .reveal-name.spin{ color:var(--cream-dim); }
