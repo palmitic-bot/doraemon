@@ -25,11 +25,12 @@ const ANIMALS = [
 const MEDAL = ['🥇','🥈','🥉'];
 const MAX_RACERS = 10;
 
-let root, el, selected = new Set(['horse','rabbit','turtle','cheetah']), raf = null, running = false;
+let root, el, selected = new Set(), raf = null, running = false;
 
 /* ---------- หน้าเลือกสัตว์ ---------- */
 function renderSetup(){
   stop();
+  selected.clear();   // ค่าเริ่มต้น: ยังไม่เลือกสักตัว (ผู้เล่นแต่ละรอบไม่เท่ากัน)
   const chips = ANIMALS.map(a =>
     `<button class="race-pick${selected.has(a.id) ? ' on' : ''}" data-id="${a.id}">
        <span class="rp-emoji">${a.emoji}</span><span>${a.name}</span>

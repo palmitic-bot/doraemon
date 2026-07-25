@@ -467,6 +467,76 @@ textarea.g-input{ resize:vertical; min-height:96px; line-height:1.7; }
 .race-rank{ font-family:'Kanit',sans-serif; font-weight:700; font-size:17px; color:var(--cream); }
 .race-rank.win{ color:var(--gold); font-size:20px; font-weight:800; }
 
+/* ===== ระเบิดเวลา (bomb) ===== */
+.bomb{ font-size:90px; line-height:1; margin:6px 0; }
+.bomb.ticking{ animation:bomb-pulse .5s ease-in-out infinite; }
+@keyframes bomb-pulse{ 0%,100%{transform:scale(1)} 50%{transform:scale(1.14) rotate(-3deg)} }
+.bomb.boom{ animation:bomb-boom .5s ease; }
+@keyframes bomb-boom{ 0%{transform:scale(.7)} 40%{transform:scale(1.5)} 100%{transform:scale(1.2)} }
+
+/* ===== สูบลูกโป่ง (balloon) ===== */
+.balloon-stage{ height:210px; display:flex; align-items:center; justify-content:center; width:100%; overflow:hidden; }
+.balloon{ font-size:78px; line-height:1; transition:transform .14s cubic-bezier(.3,1.4,.5,1); transform-origin:center bottom; }
+.balloon.shake{ animation:bal-shake .16s ease; }
+@keyframes bal-shake{ 0%,100%{margin-left:0} 33%{margin-left:-6px} 66%{margin-left:6px} }
+.balloon.pop{ animation:bomb-boom .4s ease; }
+
+/* ===== วัดปฏิกิริยา (reaction) ===== */
+.react-pad{ width:100%; min-height:270px; border-radius:20px; cursor:pointer; user-select:none;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px; text-align:center;
+  transition:background .12s ease; border:1px solid var(--line); }
+.react-pad.idle{ background:var(--ink-2); }
+.react-pad.wait{ background:linear-gradient(160deg,#8a1f14,#5e120b); border-color:transparent; }
+.react-pad.go{ background:linear-gradient(160deg,#33b84a,#1f7d32); }
+.react-pad.early{ background:linear-gradient(160deg,#c81d25,#7a1119); }
+.react-pad.done{ background:var(--ink-2); }
+.react-big{ font-family:'Kanit',sans-serif; font-weight:800; font-size:clamp(30px,9vw,44px); color:#fff; }
+.react-small{ color:rgba(255,255,255,.85); font-size:14px; padding:0 16px; }
+
+/* ===== เครื่องจับโกหก (lie detector) ===== */
+.scanner{ width:170px; height:170px; border-radius:50%; background:var(--ink-2); border:1px solid var(--line);
+  display:flex; align-items:center; justify-content:center; cursor:pointer; user-select:none;
+  touch-action:none; transition:box-shadow .2s ease; }
+.scanner.scanning{ box-shadow:0 0 26px rgba(234,185,73,.5); }
+.scanner.truth{ box-shadow:0 0 30px rgba(90,220,110,.6); }
+.scanner.lie{ box-shadow:0 0 30px rgba(255,80,80,.6); }
+.scan-ring{ width:140px; height:140px; border-radius:50%;
+  background:conic-gradient(var(--gold) var(--p,0%), rgba(255,255,255,0.07) 0);
+  display:flex; align-items:center; justify-content:center; }
+.scan-emoji{ width:110px; height:110px; border-radius:50%; background:var(--ink);
+  display:flex; align-items:center; justify-content:center; font-size:46px; }
+
+/* ===== จับคู่ความจำ (memory) ===== */
+.mem-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:8px; width:100%; max-width:330px; }
+.mem-card{ aspect-ratio:1; border:none; border-radius:12px; cursor:pointer; position:relative;
+  background:linear-gradient(160deg,#2a2236,#171220); border:1px solid rgba(234,185,73,.3);
+  font-size:clamp(20px,7vw,28px); display:flex; align-items:center; justify-content:center; }
+.mem-card::after{ content:'?'; position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+  color:rgba(234,185,73,.6); font-family:'Kanit',sans-serif; font-weight:800; font-size:24px; }
+.mem-card .mem-face{ opacity:0; }
+.mem-card.flipped, .mem-card.matched{ background:linear-gradient(160deg,var(--cream),#efe4cf); border-color:transparent; }
+.mem-card.flipped::after, .mem-card.matched::after{ opacity:0; }
+.mem-card.flipped .mem-face, .mem-card.matched .mem-face{ opacity:1; }
+.mem-card.matched{ opacity:.55; }
+
+/* ===== ตบตัวตุ่น (whack) ===== */
+.mole-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; width:100%; max-width:300px; }
+.mole-hole{ aspect-ratio:1; border:none; border-radius:50%; cursor:pointer; overflow:hidden; position:relative;
+  background:radial-gradient(circle at 50% 120%, #3a2a1a, #1a1410); box-shadow:inset 0 6px 12px rgba(0,0,0,.6); }
+.mole{ position:absolute; inset:0; display:flex; align-items:flex-end; justify-content:center; padding-bottom:8px;
+  font-size:clamp(26px,10vw,40px); transform:translateY(110%); transition:transform .12s ease; }
+.mole-hole.up .mole{ transform:translateY(0); }
+.mole-hole.bonk{ background:radial-gradient(circle at 50% 120%, #6a4a2a, #2a2016); }
+
+/* ===== หยุดให้ตรง (stop bar) ===== */
+.bar-track{ position:relative; width:100%; max-width:420px; height:30px; border-radius:100px;
+  background:var(--ink-2); border:1px solid var(--line); overflow:hidden; }
+.bar-zone{ position:absolute; top:0; bottom:0; background:linear-gradient(180deg,var(--gold),#c99a2e); opacity:.9; }
+.bar-marker{ position:absolute; top:-3px; bottom:-3px; width:6px; left:0; border-radius:4px;
+  background:var(--cream); box-shadow:0 0 8px rgba(247,239,225,.7); transform:translateX(-50%); }
+.bar-marker.good{ background:#7fe07a; box-shadow:0 0 12px rgba(120,240,110,.9); }
+.bar-marker.bad{ background:var(--pink); box-shadow:0 0 12px rgba(255,93,143,.9); }
+
 /* ===== picker reveal ===== */
 .reveal-name{ font-family:'Kanit',sans-serif; font-weight:800; font-size:clamp(30px,9vw,44px); line-height:1.2; min-height:1.2em; }
 .reveal-name.spin{ color:var(--cream-dim); }
