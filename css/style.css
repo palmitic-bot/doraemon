@@ -605,6 +605,82 @@ textarea.g-input{ resize:vertical; min-height:96px; line-height:1.7; }
 .duel-bar{ height:100%; width:0; background:#fff; border-radius:100px; transition:width .05s linear; }
 .duel-mid{ text-align:center; font-family:'Kanit',sans-serif; font-weight:800; font-size:16px; color:var(--gold); padding:4px 0; }
 
+/* ===== ชุดเกม v8 ===== */
+.tap-pad{ width:100%; max-width:340px; min-height:220px; border-radius:22px; cursor:pointer; user-select:none;
+  background:radial-gradient(circle at 50% 40%, #2a2438, var(--ink-2)); border:1px solid var(--line);
+  display:flex; align-items:center; justify-content:center; transition:transform .05s ease, background .1s; }
+.tap-pad.live{ background:radial-gradient(circle at 50% 40%, #3a2f52, #241c33); }
+.tap-pad:active{ transform:scale(.98); }
+.tap-count{ font-family:'Kanit',sans-serif; font-weight:800; font-size:64px; color:var(--gold); }
+
+.aim-area{ position:relative; width:100%; max-width:360px; height:320px; border-radius:18px;
+  background:var(--ink-2); border:1px solid var(--line); overflow:hidden; }
+.aim-target{ position:absolute; width:52px; height:52px; margin:-26px 0 0 -26px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center; font-size:34px; cursor:pointer; animation:aim-pop .18s ease; }
+@keyframes aim-pop{ 0%{transform:scale(.4)} 100%{transform:scale(1)} }
+
+.num-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:10px; width:100%; max-width:320px; }
+.num-cell{ aspect-ratio:1; border:none; border-radius:12px; cursor:pointer; font-family:'Kanit',sans-serif;
+  font-weight:800; font-size:22px; color:var(--cream); background:var(--ink-2); border:1px solid var(--line); }
+.num-cell.done{ background:linear-gradient(180deg,#3fae5c,#2c7d40); color:#fff; border-color:transparent; }
+
+.arrow-big{ font-size:64px; } .arrow-big.miss{ animation:bal-shake .16s ease; }
+.arrow-pads{ display:flex; flex-direction:column; align-items:center; gap:8px; }
+.arrow-mid{ display:flex; gap:60px; }
+.arrow-btn{ width:66px; height:60px; border:none; border-radius:14px; font-size:28px; cursor:pointer;
+  background:var(--ink-2); border:1px solid var(--line); }
+.arrow-btn:active{ transform:scale(.94); }
+
+.odd-grid{ display:grid; gap:8px; width:100%; max-width:340px; }
+.odd-cell{ aspect-ratio:1; border:none; border-radius:10px; cursor:pointer; font-size:clamp(18px,6vw,30px);
+  background:var(--ink-2); border:1px solid var(--line); display:flex; align-items:center; justify-content:center; }
+.odd-cell:active{ transform:scale(.94); }
+.odd-cell.reveal{ box-shadow:0 0 0 3px var(--gold); }
+
+.count-field{ display:flex; flex-wrap:wrap; gap:6px; justify-content:center; width:100%; max-width:360px;
+  background:var(--ink-2); border:1px solid var(--line); border-radius:16px; padding:16px; font-size:26px; }
+
+.taboo-word{ font-family:'Kanit',sans-serif; font-weight:800; font-size:clamp(26px,8vw,38px); color:var(--gold); }
+.taboo-list{ display:flex; flex-wrap:wrap; gap:6px; justify-content:center; }
+.taboo-item{ background:rgba(255,93,143,.12); border:1px solid rgba(255,93,143,.4); color:#ff9db8;
+  border-radius:100px; padding:4px 12px; font-size:14px; }
+
+.cat-letter{ font-family:'Kanit',sans-serif; font-weight:800; font-size:56px; color:var(--gold); line-height:1; }
+
+.magic8{ width:180px; height:180px; border-radius:50%; cursor:pointer;
+  background:radial-gradient(circle at 38% 32%, #444, #0b0b0b 70%); display:flex; align-items:center; justify-content:center;
+  box-shadow:0 10px 24px rgba(0,0,0,.5); }
+.magic8.shake8{ animation:croc2-shake .5s ease; }
+.magic8-window{ width:100px; height:100px; border-radius:50%; background:#141a3a; display:flex; align-items:center; justify-content:center;
+  padding:8px; text-align:center; color:#9fb0ff; font-family:'Kanit',sans-serif; font-weight:700; font-size:14px; box-shadow:inset 0 0 14px rgba(0,0,0,.7); }
+
+.love-heart{ font-size:30px; }
+.love-bar-wrap{ width:100%; max-width:400px; height:22px; background:var(--ink-2); border:1px solid var(--line); border-radius:100px; overflow:hidden; }
+.love-bar{ height:100%; width:0; background:linear-gradient(90deg,#ff5d8f,#ff9db8); transition:width .03s linear; }
+
+.slot-box{ display:flex; gap:10px; background:var(--ink-2); border:2px solid var(--gold); border-radius:18px; padding:16px; }
+.slot-reel{ width:72px; height:88px; border-radius:12px; background:linear-gradient(180deg,#fff,#e7dcc7);
+  display:flex; align-items:center; justify-content:center; font-size:42px; box-shadow:inset 0 4px 10px rgba(0,0,0,.2); }
+.slot-reel.spinning{ animation:slot-blur .1s linear infinite; }
+@keyframes slot-blur{ 0%,100%{transform:translateY(0)} 50%{transform:translateY(-4px)} }
+
+.scratch-card{ position:relative; width:100%; max-width:340px; height:200px; border-radius:18px; overflow:hidden; border:1px solid var(--line); }
+.scratch-inner{ position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:8px; background:linear-gradient(160deg,#2a2236,#171220); text-align:center; padding:16px; }
+.scratch-cover{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; cursor:pointer;
+  background:linear-gradient(135deg,#8a8a8a,#c9c9c9); color:#555; font-family:'Kanit',sans-serif; font-weight:800; font-size:20px;
+  touch-action:none; transition:opacity .05s linear; }
+
+.adice-box{ display:flex; gap:12px; align-items:stretch; justify-content:center; }
+.adice{ min-width:120px; background:linear-gradient(180deg,#fff,#e7dcc7); border-radius:16px; padding:16px 12px;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; box-shadow:0 6px 14px rgba(0,0,0,.35); }
+.adice.num{ min-width:76px; }
+.adice-e{ font-size:38px; }
+.adice-t{ font-family:'Kanit',sans-serif; font-weight:800; font-size:14px; color:#333; text-align:center; }
+.adice.num .adice-e{ color:var(--pink); font-family:'Kanit',sans-serif; font-weight:800; }
+
+.g-card.imp{ border-color:rgba(255,93,143,.5); }
+
 /* ===== picker reveal ===== */
 .reveal-name{ font-family:'Kanit',sans-serif; font-weight:800; font-size:clamp(30px,9vw,44px); line-height:1.2; min-height:1.2em; }
 .reveal-name.spin{ color:var(--cream-dim); }
