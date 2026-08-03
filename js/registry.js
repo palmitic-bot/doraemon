@@ -11,6 +11,7 @@ export const GAMES = [
   { id: 'pairing',     name: 'จับคู่',      emoji: '💞', module: './games/pairing.js' },
   { id: 'charades',    name: 'ใบ้คำ',       emoji: '🎭', module: './games/charades.js' },
   { id: 'crocodile',   name: 'ฟันจรเข้',    emoji: '🐊', module: './games/crocodile.js' },
+  { id: 'corgi',       name: 'คอร์กี้',     emoji: '🐶', module: './games/corgi.js' },
   { id: 'dice',        name: 'ลูกเต๋า',     emoji: '🎲', module: './games/dice.js' },
   { id: 'race',        name: 'วิ่งแข่ง',    emoji: '🏁', module: './games/race.js' },
   { id: 'bomb',        name: 'ระเบิดเวลา',  emoji: '💣', module: './games/bomb.js' },

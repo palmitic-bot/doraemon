@@ -432,6 +432,102 @@ textarea.g-input{ resize:vertical; min-height:96px; line-height:1.7; }
 .croc2.chomp .croc2-upper{ transform:translateY(60px) scaleY(1.16); }
 .croc2.chomp .croc2-teeth.top{ transform:translateY(40px); }
 
+/* ===== คอร์กี้งับ (corgi) — วาดด้วย CSS ล้วน ไม่มีไฟล์รูป ===== */
+.corgi{ position:relative; width:min(88vw,320px); margin:2px auto 0; padding-top:46px;
+  user-select:none; -webkit-tap-highlight-color:transparent; }
+.corgi.shake{ animation:corgi-shake .5s ease; }
+@keyframes corgi-shake{ 0%,100%{transform:translateX(0) rotate(0)} 18%{transform:translateX(-12px) rotate(-2deg)}
+  44%{transform:translateX(10px) rotate(2deg)} 70%{transform:translateX(-6px) rotate(-1deg)} }
+
+/* หัว — ขากรรไกรบน (ลงมางับตอนแพ้) */
+.corgi-head{ position:relative; z-index:3; height:106px;
+  background:linear-gradient(180deg,#d99a55 0%, #C68642 55%, #a76c31 100%);
+  border-radius:50% 50% 32% 32% / 86% 86% 28% 28%;
+  box-shadow:inset 0 -8px 0 rgba(0,0,0,.16), 0 6px 14px rgba(0,0,0,.42);
+  transform-origin:50% 96%; transition:transform .2s cubic-bezier(.34,1.5,.5,1); }
+/* หูตั้งสามเหลี่ยม */
+.corgi-ear{ position:absolute; top:-42px; width:56px; height:64px;
+  background:linear-gradient(180deg,#C68642 0%, #8f5c29 100%);
+  clip-path:polygon(50% 0, 100% 100%, 0 100%);
+  filter:drop-shadow(0 3px 4px rgba(0,0,0,.35)); }
+.corgi-ear::after{ content:''; position:absolute; left:50%; top:28%; margin-left:-13px;
+  width:26px; height:40px; background:linear-gradient(180deg,#f0b3a4,#d4867a);
+  clip-path:polygon(50% 0, 100% 100%, 0 100%); }
+.corgi-ear.l{ left:4px; transform:rotate(-10deg); }
+.corgi-ear.r{ right:4px; transform:rotate(10deg); }
+/* ตา */
+.corgi-eye{ position:absolute; top:32px; z-index:6; width:20px; height:24px; border-radius:50%;
+  background:radial-gradient(circle at 38% 30%, #6b4b2f 0%, #1b1109 62%);
+  box-shadow:0 0 0 2px rgba(0,0,0,.22); }
+.corgi-eye::after{ content:''; position:absolute; top:4px; left:4px; width:6px; height:6px;
+  border-radius:50%; background:rgba(255,255,255,.92); }
+.corgi-eye.l{ left:27%; } .corgi-eye.r{ right:27%; }
+/* แก้มปุยสีขาว */
+.corgi-cheek{ position:absolute; bottom:-16px; z-index:2; width:80px; height:58px;
+  background:radial-gradient(circle at 50% 32%, #fffaf0 0%, #ebdfca 100%);
+  border-radius:62% 62% 54% 54% / 72% 72% 58% 58%;
+  box-shadow:0 4px 9px rgba(0,0,0,.28); }
+.corgi-cheek::before,.corgi-cheek::after{ content:''; position:absolute; border-radius:50%;
+  background:#fdf8ee; box-shadow:0 3px 6px rgba(0,0,0,.16); }
+.corgi-cheek::before{ width:32px; height:32px; bottom:0; }
+.corgi-cheek::after{ width:24px; height:24px; bottom:12px; }
+.corgi-cheek.l{ left:0; }
+.corgi-cheek.l::before{ left:-10px; } .corgi-cheek.l::after{ left:-4px; bottom:-6px; }
+.corgi-cheek.r{ right:0; }
+.corgi-cheek.r::before{ right:-10px; } .corgi-cheek.r::after{ right:-4px; bottom:-6px; }
+/* ปากกระบอกขาว + จมูก */
+.corgi-snout{ position:absolute; left:50%; bottom:-22px; margin-left:-48px; z-index:5;
+  width:96px; height:62px;
+  background:radial-gradient(circle at 50% 28%, #fffdf7 0%, #efe4d2 100%);
+  border-radius:52% 52% 48% 48% / 58% 58% 44% 44%;
+  box-shadow:0 5px 11px rgba(0,0,0,.3); }
+.corgi-nose{ position:absolute; left:50%; top:9px; margin-left:-13px;
+  width:26px; height:20px; background:linear-gradient(180deg,#2c1c13,#0c0705);
+  border-radius:46% 46% 60% 60% / 40% 40% 78% 78%; }
+.corgi-nose::after{ content:''; position:absolute; left:50%; top:100%; margin-left:-1.5px;
+  width:3px; height:13px; background:#3a2417; border-radius:2px; }
+
+/* ปาก + ฟัน */
+.corgi-mouth{ position:relative; z-index:1; margin-top:-6px;
+  background:radial-gradient(130% 130% at 50% -25%, #6b1a1a 0%, #300808 92%);
+  border-radius:8px 8px 46% 46% / 8px 8px 74% 74%;
+  padding:30px 12px 16px; min-height:170px; overflow:hidden;
+  box-shadow:inset 0 14px 26px rgba(0,0,0,.6);
+  display:flex; flex-direction:column; align-items:center; justify-content:space-between; gap:10px;
+  transition:min-height .2s ease; }
+.corgi-teeth{ display:flex; flex-wrap:wrap; gap:7px; justify-content:center; transition:transform .2s ease; }
+.ctooth{ width:32px; height:46px; border:none; cursor:pointer;
+  background:linear-gradient(180deg,#ffffff 0%, #ded2bb 100%);
+  color:#8a1410; font-family:'Kanit',sans-serif; font-size:13px; font-weight:800;
+  display:flex; justify-content:center;
+  touch-action:manipulation; -webkit-tap-highlight-color:transparent;
+  filter:drop-shadow(0 3px 2px rgba(0,0,0,.45));
+  transition:transform .14s ease, filter .2s ease, opacity .25s ease, background .2s ease; }
+/* ฟันบนแหลมลง / ฟันล่างแหลมขึ้น */
+.corgi-teeth.top .ctooth{ clip-path:polygon(50% 100%,100% 74%,88% 0,12% 0,0 74%);
+  align-items:flex-start; padding-top:5px; }
+.corgi-teeth.bottom .ctooth{ clip-path:polygon(50% 0,100% 26%,88% 100%,12% 100%,0 26%);
+  align-items:flex-end; padding-bottom:5px; }
+.ctooth:active{ transform:translateY(4px); }
+/* แตะแล้วซี่นั้นกดลง */
+.ctooth.down{ transform:translateY(13px); opacity:.5; cursor:default; filter:none;
+  background:linear-gradient(180deg,#cfc4ae 0%, #988d79 100%); }
+.ctooth.bite{ transform:translateY(13px); opacity:1; color:#fff;
+  background:linear-gradient(180deg,#ff6b6b 0%, #a30f0f 100%);
+  filter:drop-shadow(0 0 9px rgba(255,60,60,.9)); }
+.ctooth:disabled{ cursor:default; }
+.corgi-tongue{ width:74px; height:22px; background:linear-gradient(180deg,#ff7fa3,#d94a72);
+  border-radius:40% 40% 50% 50% / 30% 30% 70% 70%; box-shadow:inset 0 -4px 6px rgba(0,0,0,.2);
+  transition:opacity .18s ease; }
+.corgi-chin{ position:relative; z-index:2; height:22px; margin-top:-8px;
+  background:linear-gradient(180deg,#C68642,#8f5c29);
+  border-radius:30% 30% 50% 50% / 24% 24% 100% 100%; }
+/* งับ: หัวลงมาปิดปาก ฟันหุบตาม */
+.corgi.chomp .corgi-head{ transform:translateY(78px) scaleY(1.08); }
+.corgi.chomp .corgi-mouth{ min-height:96px; }
+.corgi.chomp .corgi-teeth.top{ transform:translateY(40px); }
+.corgi.chomp .corgi-tongue{ opacity:0; }
+
 /* ===== ทอยลูกเต๋า (dice) ===== */
 .dice-tray{ display:flex; flex-wrap:wrap; gap:14px; justify-content:center; align-items:center; min-height:92px; width:100%; }
 .die{ width:62px; height:62px; background:linear-gradient(150deg,#fff,#ece3d3); border-radius:14px;
