@@ -54,4 +54,9 @@ export const GAMES = [
   { id: 'punishment',  name: 'บทลงโทษ',     emoji: '🎁', module: './games/punishment.js' },
   { id: 'scratch',     name: 'ขูดดวง',      emoji: '🍀', module: './games/scratch.js' },
   { id: 'actiondice',  name: 'เต๋าคำสั่ง',  emoji: '🀄', module: './games/actiondice.js' },
+  { id: 'breakout',    name: 'ทุบบล็อก',    emoji: '🧱', module: './games/breakout.js' },
+  { id: 'snake',       name: 'งูงับ',       emoji: '🐍', module: './games/snake.js' },
+  { id: 'pong',        name: 'ปิงปองคู่',   emoji: '🏓', module: './games/pong.js' },
+  { id: 'slide',       name: 'ปริศนาเลื่อน', emoji: '🧩', module: './games/slide.js' },
+  { id: 'wordguess',   name: 'ทายคำไทย',    emoji: '📝', module: './games/wordguess.js' },
 ];
